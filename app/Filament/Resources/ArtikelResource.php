@@ -90,6 +90,7 @@ class ArtikelResource extends Resource
                             ->label('Content')
                             ->required()
                             ->fileAttachmentsDirectory('artikel-attachments')
+                            ->fileAttachmentsVisibility('public')
                             ->columnSpanFull()
                             ->toolbarButtons([
                                 'attachFiles',
@@ -138,11 +139,6 @@ class ArtikelResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('image')
-                    ->label('Image')
-                    ->circular()
-                    ->size(50),
-
                 Tables\Columns\TextColumn::make('title')
                     ->label('Title')
                     ->searchable()

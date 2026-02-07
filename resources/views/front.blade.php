@@ -277,9 +277,8 @@
         @yield('styles')
     </style>
 </head>
-<body>
 
-    <!-- Navbar -->
+<body>
     <nav class="navbar">
         <div class="container navbar-content">
             <a href="/" class="brand">My<span>Blog</span></a>
@@ -288,7 +287,6 @@
                 <div class="nav-links">
                     <a href="{{ route('home') }}">Beranda</a>
                     <a href="{{ route('artikel.index') }}">Artikel</a>
-                    <a href="#">Tentang</a>
                 </div>
                 
                 <button class="sidebar-toggle" onclick="toggleSidebar()">
@@ -303,30 +301,31 @@
     <!-- Sidebar & Overlay -->
     <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
     <div class="sidebar">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color);">
+            <h3 style="font-size: 1.5rem; font-weight: 800; color: var(--text-main); margin: 0;">Menu</h3>
+            <button onclick="toggleSidebar()" style="background: none; border: none; cursor: pointer; color: var(--text-muted); transition: 0.2s; padding: 5px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+
         <h3 class="sidebar-title">Kategori</h3>
         <ul class="category-list">
             @if(isset($categories) && count($categories) > 0)
                 @foreach($categories as $category)
                 <li class="category-item">
-                    <a href="#" class="category-link">
-                        {{ $category->name }}
+                    <a href="#" class="category-link" style="display: flex; align-items: center; justify-content: space-between;">
+                        <span style="display: flex; align-items: center; gap: 10px;">
+                            <span style="width: 6px; height: 6px; background-color: var(--primary); border-radius: 50%;"></span>
+                            {{ $category->name }}
+                        </span>
                         <span class="category-count">{{ $category->artikel_count }}</span>
                     </a>
                 </li>
                 @endforeach
             @else
-                <li style="color: #888; font-style: italic;">Tidak ada kategori</li>
+                <li style="color: #94a3b8; font-style: italic; font-size: 0.9rem;">Belum ada kategori.</li>
             @endif
         </ul>
-        
-        <div style="margin-top: 40px;">
-            <h3 class="sidebar-title">Menu Lain</h3>
-            <ul class="category-list">
-                <li class="category-item"><a href="{{ route('home') }}" class="category-link">Beranda</a></li>
-                <li class="category-item"><a href="{{ route('artikel.index') }}" class="category-link">Semua Artikel</a></li>
-                <li class="category-item"><a href="/admin/login" class="category-link">Login Admin</a></li>
-            </ul>
-        </div>
     </div>
 
     <!-- Main Content -->

@@ -19,6 +19,18 @@ class ArtikelController extends Controller
         
         $article->increment('view');
 
-        return view('artikel.show', compact('article'));
+        $latestArticles = Artikel::where('status', 'published')
+            ->where('id', '!=', $article->id)
+            ->latest()
+            ->take(3)
+            ->get();
+
+        $popularArticles = Artikel::where('status', 'published')
+            ->where('id', '!=', $article->id)
+            ->orderBy('view', 'desc')
+            ->take(3)
+            ->get();
+
+        return view('artikel.show', compact('article', 'latestArticles', 'popularArticles'));
     }
 }
