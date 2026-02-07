@@ -20,12 +20,13 @@ class CategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-folder';
 
+    protected static ?string $navigationGroup = 'Content Management';
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                //card
-                Forms\Components\Card::make()
+                Forms\Components\Section::make('Category Details')
                     ->schema([
                         //name
                         Forms\Components\TextInput::make('name')
@@ -46,9 +47,8 @@ class CategoryResource extends Resource
                             ->placeholder('slug')
                             ->required()
                             ->unique(ignoreRecord: true),
-
-
                     ])
+                    ->columns(2)
             ]);
     }
 
@@ -56,14 +56,40 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->searchable(),
-                Tables\Columns\TextColumn::make('slug'),
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable()
+                    ->sortable()
+                    ->weight('bold'),
+                
+                Tables\Columns\TextColumn::make('slug')
+                    ->searchable()
+                    ->sortable()
+                    ->color('gray'),
+
+                Tables\Columns\TextColumn::make('artikel_count')
+                    ->label('Articles')
+                    ->counts('artikel')
+                    ->sortable()
+                    ->badge(),
+
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Created')
+                    ->dateTime('d M Y, H:i')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Updated')
+                    ->dateTime('d M Y, H:i')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
